@@ -5,10 +5,9 @@
   "author": "wsq",
   "license": "MIT",
   "scripts": {
-    "format": "prettier --write \"src/**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
-    "start:dev": "nodemon",
-    "start:debug": "nodemon --config nodemon-debug.json",
+    "dev": "nodemon",
+    "dev:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && tsc",
     "start:prod": "node dist/main.js",
     "start:hmr": "node dist/server",
@@ -16,9 +15,14 @@
   },
   "dependencies": {
     "@nestjs/common": "^5.1.0",
-    "@nestjs/core": "^5.1.0", 
+    "@nestjs/core": "^5.1.0",
+    "@nestjs/typeorm": "^5.2.2",
+    "class-transformer": "^0.2.0",
+    "class-validator": "^0.9.1",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.2",
+    "sqlite3": "^4.0.4",
+    "typeorm": "^0.2.9",
     "typescript": "^3.0.1"
   },
   "devDependencies": {
@@ -36,7 +40,11 @@
     "webpack-node-externals": "^1.7.2"
   },
   "jest": {
-    "moduleFileExtensions": ["js", "json", "ts"],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
     "rootDir": "src",
     "testRegex": ".spec.ts$",
     "transform": {
