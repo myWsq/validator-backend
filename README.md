@@ -1,79 +1,227 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Lanternfish 前端测试项目
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+根据要求实现一个简单的系统,  要求:
 
-## Description
+1. 使用最新版本的Vue.js；
+2. 可以使用任何库；
+3. 尽可能规范。
+4. 项目完成后源码上传至Github并将页面部署在公网上（Pages或自行部署）
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 项目说明
 
-## Installation
+总的来说是一个备忘录管理系统，逻辑非常简单。
 
-```bash
-$ npm install
+### 用户
+
+**注册页面**
+
+1. 主体为一个表单，表单项为：用户名，密码，确认密码；
+2. 需要做表单验证，验证规则在下面给出；
+3. 注册成功后跳转至登录页面。
+
+**登录页面**
+
+1. 主体为一个表单，表单项为：用户名，密码；
+2. 需要表单验证；
+3. 登录成功后跳转至主页。
+
+**主页**
+
+1. 显示用户的所有备忘录；
+2. 可新增，删除，修改某条记录。
+
+**管理页面**（暂不实现）
+
+1. 只有管理员能进入；
+2. 显示所有用户的备忘录；
+3. 可以修改，删除某条记录。
+
+## 接口说明
+
+已开启CORS；
+
+标准Restful接口；
+
+接口地址： https://todo.lanternfish.hk
+
+测试：https://todo.lanternfish.hk/todo
+
+### 鉴权
+
+使用JWT， 调用**登录**接口获得token。
+
+`curl -H "Authorization: JWT <TOKEN>" https://www.example.com`
+
+**下面带「\*」的接口需携在cookie携带有效token,否则将出现下面的错误。**
+
+```json
+{
+	"statusCode": 403,
+	"error": "Forbidden",
+	"message": "Forbidden resource"
+}
 ```
 
-## Running the app
+### 登录
 
-```bash
-# development
-$ npm run start
+**POST**
 
-# watch mode
-$ npm run start:dev
+[/auth](/auth)
 
-# incremental rebuild (webpack)
-$ npm run webpack
-$ npm run start:hmr
+**Body**
 
-# production mode
-$ npm run start:prod
+```json
+{
+    "username":"lanternfish",
+    "password":"lanternfish"
+}
 ```
 
-## Test
+**Response**
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```json
+{
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI"
+}
 ```
 
-## Support
+验证规则：
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+* username 非空；
+* password 非空。
 
-## Stay in touch
+### 获取用户信息 *
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**GET**
 
-## License
+[/auth](/auth)
 
-  Nest is [MIT licensed](LICENSE).
+**Response**
+
+```json
+{
+	"username": "lanternfish",
+	"id": "f9f5c710-403f-4e8d-9099-e85f63a22e03",
+	"name": ""
+}
+```
+
+### 注册
+
+**POST**
+
+[/user](/user)
+
+**Body**
+
+```json
+{
+    "username":"lanternfish",
+    "password":"lanternfish",
+    "name":"lantern"
+}
+```
+
+**Response**
+
+```json
+{
+    "username": "lanternfish",
+	"id": "f9f5c710-403f-4e8d-9099-e85f63a22e03",
+	"name": "lantern"
+}
+```
+
+验证规则： 
+
+* username 非空 5-12位；
+* password 非空 8-20位；
+* name 可选 1-12位；
+
+### 获取用户备忘录列表 *
+
+**GET**
+
+[/user/todo](/user/todo)
+
+**Response**
+
+```json
+[
+    {
+        "id": "dccc78ec-1e36-4dbd-b4d3-89840b49adf5",
+        "title": "todo1"
+    },
+    {
+        "id": "dccc78ec-1e36-4dbd-b4d3-89840b49adf6",
+        "title": "todo2"
+    }
+]
+```
+
+### 新增备忘录 *
+
+**POST**
+
+[/todo](/todo)
+
+**Body**
+
+```json
+{
+    "title":"todo"
+}
+```
+
+**Response**
+
+```json
+{
+    "id": "dccc78ec-1e36-4dbd-b4d3-89840b49adf6",
+    "title": "todo2"
+}
+```
+
+验证规则：
+
+title 非空 1-20位。
+
+### 删除备忘录 *
+
+**DELETE**
+
+[/todo/:id](/todo/:id)
+
+**Response**
+
+```json
+{
+    "title":"todo2"
+}
+```
+
+### 修改备忘录 *
+
+**PUT**
+
+[/todo/:id](/todo/:id)
+
+**Body**
+
+```json
+{
+    "title"："todo3"
+}
+```
+
+**Response**
+
+```json
+{
+    "id": "dccc78ec-1e36-4dbd-b4d3-89840b49adf6",
+    "title": "todo3"
+}
+```
+
+验证规则同新增备忘录。
+
