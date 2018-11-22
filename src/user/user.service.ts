@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository, DeepPartial } from 'typeorm';
-import { JwtPayload } from 'auth/auth.interface';
+import { JwtPayload } from '../auth/auth.interface';
 import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {

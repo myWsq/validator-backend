@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'user/user.service';
-import { UserEntity } from 'user/user.entity';
+import { UserService } from '../user/user.service';
+import { UserEntity } from '../user/user.entity';
 import * as jwt from 'jsonwebtoken';
 import { JWT_SECRET_KEY, JwtPayload, JWT_HEADER, VerifyPayload } from './auth.interface';
 import { Request } from 'express';

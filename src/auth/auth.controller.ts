@@ -1,6 +1,6 @@
 import { Controller, Post, Body, NotFoundException, BadRequestException, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserService } from 'user/user.service';
+import { UserService } from '../user/user.service';
 import { IsNotEmpty, IsOptional, IsInt } from 'class-validator';
 
 export class LoginCto {

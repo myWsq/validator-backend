@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, DeepPartial, Raw } from 'typeorm';
 import { TodoEntity } from './todo.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'user/user.entity';
+import { UserEntity } from '../user/user.entity';
 
 @Injectable()
 export class TodoService {

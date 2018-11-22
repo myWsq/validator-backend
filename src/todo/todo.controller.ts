@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Delete, Param, BadRequestException, Put } from '@nestjs/common';
 import { TodoService } from './todo.service';
-import { User } from 'user/user.decorator';
-import { UserEntity } from 'user/user.entity';
+import { User } from '../user/user.decorator';
+import { UserEntity } from '../user/user.entity';
 import { IsNotEmpty, Length, IsUUID } from 'class-validator';
-import { Auth } from 'auth/auth.decorator';
+import { Auth } from '../auth/auth.decorator';
 
 class CreateTodoDto {
 	@IsNotEmpty()

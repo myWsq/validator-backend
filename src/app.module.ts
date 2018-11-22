@@ -3,10 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthMiddleware } from 'auth/auth.middleware';
-import { AuthModule } from 'auth/auth.module';
+import { AuthMiddleware } from './auth/auth.middleware';
+import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from 'auth/auth.guard';
+import { AuthGuard } from './auth/auth.guard';
 import { TodoModule } from './todo/todo.module';
 
 @Module({

@@ -3,8 +3,8 @@ import { UserService } from './user.service';
 import { IsNotEmpty, Length, IsOptional, Validate } from 'class-validator';
 import { User } from './user.decorator';
 import { UserEntity } from './user.entity';
-import { TodoService } from 'todo/todo.service';
-import { Auth } from 'auth/auth.decorator';
+import { TodoService } from '../todo/todo.service';
+import { Auth } from '../auth/auth.decorator';
 
 class CreateUserDto {
 	@IsNotEmpty()
