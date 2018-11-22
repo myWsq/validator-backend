@@ -50,15 +50,17 @@
 
 使用JWT， 调用**登录**接口获得token。
 
-`curl -H "Authorization: JWT <TOKEN>" https://www.example.com`
+`curl -H "Authorization: JWT <TOKEN>" https://todo.lanternfish.hk`
 
-**下面带「\*」的接口需携在cookie携带有效token,否则将出现下面的错误。**
+`Hello world`
+
+**下面带「\*」的接口需携带有效token,否则将出现下面的错误。**
 
 ```json
 {
-	"statusCode": 403,
-	"error": "Forbidden",
-	"message": "Forbidden resource"
+    "statusCode": 403,
+    "error": "Forbidden",
+    "message": "Forbidden resource"
 }
 ```
 
@@ -100,9 +102,9 @@
 
 ```json
 {
-	"username": "lanternfish",
-	"id": "f9f5c710-403f-4e8d-9099-e85f63a22e03",
-	"name": ""
+    "username": "lanternfish",
+    "id": "f9f5c710-403f-4e8d-9099-e85f63a22e03",
+    "name": ""
 }
 ```
 
@@ -127,8 +129,8 @@
 ```json
 {
     "username": "lanternfish",
-	"id": "f9f5c710-403f-4e8d-9099-e85f63a22e03",
-	"name": "lantern"
+    "id": "f9f5c710-403f-4e8d-9099-e85f63a22e03",
+    "name": "lantern"
 }
 ```
 
