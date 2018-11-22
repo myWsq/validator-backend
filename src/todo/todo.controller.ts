@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Delete, Param, BadRequestException, Put } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Delete,
+	Param,
+	BadRequestException,
+	Put,
+	ForbiddenException
+} from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { User } from '../user/user.decorator';
 import { UserEntity } from '../user/user.entity';
@@ -45,20 +55,26 @@ export class TodoController {
 
 	@Delete(':id')
 	@Auth()
-	async deleteTodo(@Param() { id }: TodoIdDto) {
+	async deleteTodo(@Param() { id }: TodoIdDto, @User() user: UserEntity) {
 		const todo = await this.todoService.getOneTodo(id);
 		if (!todo) {
 			throw new BadRequestException(`Todo [${id}] Not Found`);
+		}
+		if (todo.user.id !== user.id) {
+			throw new ForbiddenException();
 		}
 		return await this.todoService.deleteTodo(todo);
 	}
 
 	@Put(':id')
 	@Auth()
-	async updateTodo(@Param() { id }: TodoIdDto, @Body() updateTodoDto: UpdateTodoDto) {
+	async updateTodo(@Param() { id }: TodoIdDto, @Body() updateTodoDto: UpdateTodoDto, @User() user: UserEntity) {
 		const todo = await this.todoService.getOneTodo(id);
 		if (!todo) {
 			throw new BadRequestException(`Todo [${id}] Not Found`);
+		}
+		if (todo.user.id !== user.id) {
+			throw new ForbiddenException();
 		}
 		return await this.todoService.updateTodo(id, updateTodoDto);
 	}

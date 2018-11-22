@@ -1,7 +1,10 @@
-import { Controller, Post, Body, NotFoundException, BadRequestException, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, NotFoundException, BadRequestException, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { IsNotEmpty, IsOptional, IsInt } from 'class-validator';
+import { User } from '../user/user.decorator';
+import { UserEntity } from '../user/user.entity';
+import { Auth } from './auth.decorator';
 
 export class LoginCto {
 	@IsNotEmpty() username: string;
@@ -25,5 +28,12 @@ export class AuthController {
 				token: this.authService.generateJwtToken(user)
 			};
 		}
+	}
+
+	@Get()
+	@Auth()
+	async me(@User() user: UserEntity) {
+		delete user.password;
+		return user;
 	}
 }
