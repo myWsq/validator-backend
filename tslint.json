@@ -48,7 +48,8 @@
         "one-variable-per-declaration": [
             false
         ],
-        "trailing-comma":false
+        "trailing-comma":false,
+        "jsdoc-format":false
     },
     "rulesDirectory": []
 }
