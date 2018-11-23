@@ -40,15 +40,15 @@
 
 标准Restful接口；
 
-接口地址： https://todo.lanternfish.hk
+接口地址： https://todo.lanternfish.ai
 
-测试：https://todo.lanternfish.hk/todo
+测试：https://todo.lanternfish.ai/todo
 
 ### 鉴权
 
 使用JWT， 调用**登录**接口获得token。
 
-`curl -H "Authorization: JWT <TOKEN>" https://todo.lanternfish.hk`
+`curl -H "Authorization: JWT <TOKEN>" https://todo.lanternfish.ai`
 
 `Hello world`
 
