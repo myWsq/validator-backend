@@ -63,20 +63,23 @@ export class TodoController {
 		if (todo.user.id !== user.id) {
 			throw new ForbiddenException();
 		}
+		delete todo.user;
 		return await this.todoService.deleteTodo(todo);
 	}
 
 	@Put(':id')
 	@Auth()
 	async updateTodo(@Param() { id }: TodoIdDto, @Body() updateTodoDto: UpdateTodoDto, @User() user: UserEntity) {
-		const todo = await this.todoService.getOneTodo(id);
+		let todo = await this.todoService.getOneTodo(id);
 		if (!todo) {
 			throw new BadRequestException(`Todo [${id}] Not Found`);
 		}
 		if (todo.user.id !== user.id) {
 			throw new ForbiddenException();
 		}
+		await this.todoService.updateTodo(id, updateTodoDto);
+		todo = await this.todoService.getOneTodo(id);
 		delete todo.user;
-		return await this.todoService.updateTodo(id, updateTodoDto);
+		return todo;
 	}
 }
