@@ -7,7 +7,7 @@ import {
 	Param,
 	BadRequestException,
 	Put,
-	ForbiddenException
+	ForbiddenException,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { User } from '../user/user.decorator';
@@ -47,7 +47,7 @@ export class TodoController {
 	async createTodo(@Body() createTodoDto: CreateTodoDto, @User() user: UserEntity) {
 		const todo = await this.todoService.createTodo({
 			...createTodoDto,
-			user
+			user,
 		});
 		delete todo.user;
 		return todo;
@@ -63,6 +63,7 @@ export class TodoController {
 		if (todo.user.id !== user.id) {
 			throw new ForbiddenException();
 		}
+		delete todo.user;
 		return await this.todoService.deleteTodo(todo);
 	}
 
@@ -76,6 +77,7 @@ export class TodoController {
 		if (todo.user.id !== user.id) {
 			throw new ForbiddenException();
 		}
+		delete todo.user;
 		return await this.todoService.updateTodo(id, updateTodoDto);
 	}
 }

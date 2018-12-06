@@ -12,12 +12,21 @@ export class TodoService {
      */
 	async getAllTodo() {
 		return this.todoRepository.find({
-			relations: [ 'user' ]
+			relations: [
+				'user',
+			],
 		});
 	}
 
 	async getOneTodo(id: string) {
-		return await this.todoRepository.findOne({ id });
+		return await this.todoRepository.findOne({
+			relations: [
+				'user',
+			],
+			where: {
+				id,
+			},
+		});
 	}
 
 	/**
