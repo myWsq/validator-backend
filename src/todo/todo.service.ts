@@ -47,7 +47,6 @@ export class TodoService {
 	}
 
 	async updateTodo(id: string, data: DeepPartial<TodoEntity>) {
-		await this.todoRepository.update({ id }, data);
-		return this.getOneTodo(id);
+		return await this.todoRepository.update({ id }, data);
 	}
 }

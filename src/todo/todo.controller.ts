@@ -63,7 +63,6 @@ export class TodoController {
 		if (todo.user.id !== user.id) {
 			throw new ForbiddenException();
 		}
-		delete todo.user;
 		return await this.todoService.deleteTodo(todo);
 	}
 
