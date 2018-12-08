@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
 	constructor(@InjectRepository(UserEntity) private readonly UserRepository: Repository<UserEntity>) {}
 
-    /**
+	/**
      * 查询全部用户
      */
 	async findAll() {
@@ -27,11 +27,11 @@ export class UserService {
 	}
 
 	/**
-     * 通过jwt荷载查找用户
-     * @param payload 荷载
+     * 通过id查找用户
+     * @param id
      */
-	async findOne(payload: JwtPayload) {
-		return await this.UserRepository.findOne(payload);
+	async findOne(id: number) {
+		return await this.UserRepository.findOne(id);
 	}
 
 	/**
@@ -49,7 +49,9 @@ export class UserService {
 	async getUserTodos(user: UserEntity) {
 		const userWithTodo = await this.UserRepository.findOne({
 			where: { id: user.id },
-			relations: [ 'todos' ]
+			relations: [
+				'todos',
+			],
 		});
 		return userWithTodo.todos;
 	}

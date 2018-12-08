@@ -1,0 +1,12 @@
+{
+	"type": "postgres",
+	"host": "sxyori.com",
+	"port": 5432,
+	"username": "dev_sxyori.com",
+	"password": "dev_sxyori.com",
+	"database": "dev_sxyori.com",
+	"entities": [
+		"src/**/**.entity{.ts,.js}"
+	],
+	"synchronize": true
+}

@@ -12,7 +12,7 @@ import {
 import { TodoService } from './todo.service';
 import { User } from '../user/user.decorator';
 import { UserEntity } from '../user/user.entity';
-import { IsNotEmpty, Length, IsUUID } from 'class-validator';
+import { IsNotEmpty, Length, IsNumber } from 'class-validator';
 import { Auth } from '../auth/auth.decorator';
 
 class CreateTodoDto {
@@ -23,7 +23,7 @@ class CreateTodoDto {
 
 class TodoIdDto {
 	@IsNotEmpty()
-	@IsUUID()
+	@IsNumber()
 	id: string;
 }
 

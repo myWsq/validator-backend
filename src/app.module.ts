@@ -1,4 +1,5 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -8,27 +9,34 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { TodoModule } from './todo/todo.module';
+import { Request } from 'express';
+import { JWT_HEADER } from 'auth/auth.interface';
 
 @Module({
 	imports: [
 		UserModule,
 		AuthModule,
-		TypeOrmModule.forRoot({
-			type: 'sqlite',
-			database: 'sqlite3.db',
-			entities: [ __dirname + '/../**/*.entity{.ts,.js}' ],
-			synchronize: true
+		TodoModule,
+		TypeOrmModule.forRoot(),
+		GraphQLModule.forRoot({
+			typePaths: [
+				'./**/*.graphql',
+			],
+			context: (ctx) => {
+				return ctx.req;
+			},
 		}),
-		TodoModule
 	],
-	controllers: [ AppController ],
+	controllers: [
+		AppController,
+	],
 	providers: [
 		AppService,
 		{
 			provide: APP_GUARD,
-			useClass: AuthGuard
-		}
-	]
+			useClass: AuthGuard,
+		},
+	],
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {

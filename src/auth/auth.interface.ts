@@ -3,7 +3,7 @@ export const JWT_HEADER = 'Authorization';
 export const JWT_HEADER_PREFIX = 'JWT';
 
 export interface JwtPayload {
-	id: string;
+	id: number;
 	username: string;
 }
 

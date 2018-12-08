@@ -3,7 +3,7 @@ import { UserEntity } from '../user/user.entity';
 
 @Entity()
 export class TodoEntity {
-	@PrimaryGeneratedColumn('uuid') id: string;
+	@PrimaryGeneratedColumn() id: number;
 
 	@Column({ length: 20 })
 	title: string;

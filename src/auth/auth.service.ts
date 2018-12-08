@@ -28,7 +28,7 @@ export class AuthService {
 	async verifyJwtToken(token: string) {
 		try {
 			const payload = jwt.verify(token, JWT_SECRET_KEY) as JwtPayload;
-			return await this.userService.findOne(payload);
+			return await this.userService.findOne(payload.id);
 		} catch (error) {
 			return null;
 		}

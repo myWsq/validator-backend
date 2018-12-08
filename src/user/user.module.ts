@@ -6,11 +6,25 @@ import { UserService } from './user.service';
 import { AuthModule } from '../auth/auth.module';
 import { TodoService } from '../todo/todo.service';
 import { TodoEntity } from '../todo/todo.entity';
+import { UserResolver } from './user.resolver';
 
 @Module({
-	imports: [ TypeOrmModule.forFeature([ UserEntity, TodoEntity ]) ],
-	controllers: [ UserController ],
-	providers: [ UserService, TodoService ],
-	exports: [ UserService ]
+	imports: [
+		TypeOrmModule.forFeature([
+			UserEntity,
+			TodoEntity,
+		]),
+	],
+	controllers: [
+		UserController,
+	],
+	providers: [
+		UserService,
+		TodoService,
+		UserResolver,
+	],
+	exports: [
+		UserService,
+	],
 })
 export class UserModule {}

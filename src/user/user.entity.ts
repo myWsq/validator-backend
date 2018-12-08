@@ -3,15 +3,15 @@ import { TodoEntity } from '../todo/todo.entity';
 
 @Entity()
 export class UserEntity {
-	@PrimaryGeneratedColumn('uuid') id: string;
+	@PrimaryGeneratedColumn() id: number;
 
-	@PrimaryColumn({ length: 12, unique: true })
+	@Column({ length: 12, unique: true })
 	username: string;
 
 	@Column({ length: 12, default: '' })
 	name: string;
 
-	@Column({ length: 32 })
+	@Column({ length: 128 })
 	password: string;
 
 	@OneToMany((type) => TodoEntity, (todo) => todo.user)
