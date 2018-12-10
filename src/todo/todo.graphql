@@ -1,0 +1,14 @@
+type Todo {
+	id: ID!
+	updateDate: Date!
+	createDate: Date!
+	title: String
+}
+
+input CreateTodoDto {
+	title: String!
+}
+
+type Mutation {
+	createTodo(createTodoDto: CreateTodoDto!): Todo
+}

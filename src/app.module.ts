@@ -9,8 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { TodoModule } from './todo/todo.module';
-import { Request } from 'express';
-import { JWT_HEADER } from 'auth/auth.interface';
+import { CommonModule } from './common/common.module';
 
 @Module({
 	imports: [
@@ -26,6 +25,7 @@ import { JWT_HEADER } from 'auth/auth.interface';
 				return ctx.req;
 			},
 		}),
+		CommonModule,
 	],
 	controllers: [
 		AppController,

@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, DeepPartial, Raw } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { TodoEntity } from './todo.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '../user/user.entity';
 
 @Injectable()
 export class TodoService {
@@ -46,7 +45,7 @@ export class TodoService {
 		return await this.todoRepository.remove(todo);
 	}
 
-	async updateTodo(id: string, data: DeepPartial<TodoEntity>) {
+	async updateTodo(id: number, data: DeepPartial<TodoEntity>) {
 		return await this.todoRepository.update({ id }, data);
 	}
 }

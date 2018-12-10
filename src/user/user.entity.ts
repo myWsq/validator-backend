@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, OneToMany } from 'typeorm';
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	PrimaryColumn,
+	OneToMany,
+	UpdateDateColumn,
+	CreateDateColumn,
+} from 'typeorm';
 import { TodoEntity } from '../todo/todo.entity';
 
 @Entity()
@@ -14,6 +22,9 @@ export class UserEntity {
 	@Column({ length: 128 })
 	password: string;
 
-	@OneToMany((type) => TodoEntity, (todo) => todo.user)
+	@OneToMany((type) => TodoEntity, (todo) => todo.user, { eager: true })
 	todos: TodoEntity[];
+
+	@UpdateDateColumn() updateDate: Date;
+	@CreateDateColumn() createDate: Date;
 }

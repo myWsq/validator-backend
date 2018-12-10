@@ -2,7 +2,6 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
-import { JWT_HEADER } from './auth.interface';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

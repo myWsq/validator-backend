@@ -1,7 +1,10 @@
 type User {
-	id: Int!
-	username: String
-	name: String
+	id: ID!
+    updateDate: Date!
+	createDate: Date!
+	username: String!
+	name: String!
+	todos: [Todo]
 }
 
 input CreateUserDto {

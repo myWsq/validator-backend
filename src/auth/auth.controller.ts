@@ -1,4 +1,4 @@
-import { Controller, Post, Body, NotFoundException, BadRequestException, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Body, BadRequestException, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.decorator';

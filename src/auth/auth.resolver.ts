@@ -4,7 +4,7 @@ import { LoginDto } from './auth.dto';
 import { UserService } from 'user/user.service';
 import { BadRequestException } from '@nestjs/common';
 
-@Resolver('User')
+@Resolver('Auth')
 export class AuthResolver {
 	constructor(private readonly authService: AuthService, private readonly userService: UserService) {}
 

@@ -12,22 +12,8 @@ import {
 import { TodoService } from './todo.service';
 import { User } from '../user/user.decorator';
 import { UserEntity } from '../user/user.entity';
-import { IsNotEmpty, Length, IsNumber } from 'class-validator';
 import { Auth } from '../auth/auth.decorator';
-
-class CreateTodoDto {
-	@IsNotEmpty()
-	@Length(1, 20)
-	title: string;
-}
-
-class TodoIdDto {
-	@IsNotEmpty()
-	@IsNumber()
-	id: string;
-}
-
-class UpdateTodoDto extends CreateTodoDto {}
+import { CreateTodoDto, UpdateTodoDto } from './todo.dto';
 
 @Controller('todo')
 export class TodoController {
@@ -55,7 +41,7 @@ export class TodoController {
 
 	@Delete(':id')
 	@Auth()
-	async deleteTodo(@Param() { id }: TodoIdDto, @User() user: UserEntity) {
+	async deleteTodo(@Param('id') id, @User() user: UserEntity) {
 		const todo = await this.todoService.getOneTodo(id);
 		if (!todo) {
 			throw new BadRequestException(`Todo [${id}] Not Found`);
@@ -69,7 +55,7 @@ export class TodoController {
 
 	@Put(':id')
 	@Auth()
-	async updateTodo(@Param() { id }: TodoIdDto, @Body() updateTodoDto: UpdateTodoDto, @User() user: UserEntity) {
+	async updateTodo(@Param('id') id, @Body() updateTodoDto: UpdateTodoDto, @User() user: UserEntity) {
 		let todo = await this.todoService.getOneTodo(id);
 		if (!todo) {
 			throw new BadRequestException(`Todo [${id}] Not Found`);
