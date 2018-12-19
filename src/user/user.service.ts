@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository, DeepPartial } from 'typeorm';
-import { JwtPayload } from '../auth/auth.interface';
 import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {
@@ -40,20 +39,6 @@ export class UserService {
      */
 	async findOneByUsername(username: string) {
 		return await this.UserRepository.findOne({ username });
-	}
-
-	/**
-     * 获得某个用户的全部Todo
-     * @param user 用户信息
-     */
-	async getUserTodos(user: UserEntity) {
-		const userWithTodo = await this.UserRepository.findOne({
-			where: { id: user.id },
-			relations: [
-				'todos',
-			],
-		});
-		return userWithTodo.todos;
 	}
 
 	validatePassword(password: string, hash: string) {
