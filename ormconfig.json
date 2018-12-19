@@ -1,10 +1,10 @@
 {
 	"type": "postgres",
-	"host": "sxyori.com",
+	"host": "YOUR HOST",
 	"port": 5432,
-	"username": "dev_sxyori.com",
-	"password": "dev_sxyori.com",
-	"database": "dev_sxyori.com",
+	"username": "YOUR USERNAME",
+	"password": "YOUR PASSWORD",
+	"database": "YOUR DATABASE",
 	"entities": [
 		"src/**/**.entity{.ts,.js}"
 	],

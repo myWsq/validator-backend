@@ -7,14 +7,12 @@ import { AuthMiddleware } from './auth/auth.middleware';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
-import { TodoModule } from './todo/todo.module';
 import { CommonModule } from './common/common.module';
 
 @Module({
 	imports: [
 		UserModule,
 		AuthModule,
-		TodoModule,
 		TypeOrmModule.forRoot(),
 		CommonModule,
 	],
