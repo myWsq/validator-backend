@@ -6,7 +6,6 @@ import { UserService } from './user.service';
 import { AuthModule } from '../auth/auth.module';
 import { TodoService } from '../todo/todo.service';
 import { TodoEntity } from '../todo/todo.entity';
-import { UserResolver } from './user.resolver';
 
 @Module({
 	imports: [
@@ -21,7 +20,6 @@ import { UserResolver } from './user.resolver';
 	providers: [
 		UserService,
 		TodoService,
-		UserResolver,
 	],
 	exports: [
 		UserService,

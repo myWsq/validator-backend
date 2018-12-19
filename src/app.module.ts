@@ -1,5 +1,4 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -17,14 +16,6 @@ import { CommonModule } from './common/common.module';
 		AuthModule,
 		TodoModule,
 		TypeOrmModule.forRoot(),
-		GraphQLModule.forRoot({
-			typePaths: [
-				'./**/*.graphql',
-			],
-			context: (ctx) => {
-				return ctx.req;
-			},
-		}),
 		CommonModule,
 	],
 	controllers: [
