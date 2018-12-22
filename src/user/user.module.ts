@@ -6,13 +6,15 @@ import { UserService } from './user.service';
 import { AppService } from 'app.service';
 import { AuthService } from 'auth/auth.service';
 import { Web3Module } from 'web3/web3.module';
+import { LogModule } from 'log/log.module';
 
 @Module({
 	imports: [
 		TypeOrmModule.forFeature([
 			UserEntity,
-        ]),
-        Web3Module
+		]),
+		Web3Module,
+		LogModule,
 	],
 	controllers: [
 		UserController,

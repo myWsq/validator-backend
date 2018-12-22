@@ -1,4 +1,4 @@
-import { Controller, Post, Body, BadRequestException, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, ConfirmDto } from './user.dto';
 import { AppService } from 'app.service';
@@ -8,6 +8,7 @@ import { Auth } from 'auth/auth.decorator';
 import { User } from './user.decorator';
 import { UserEntity } from './user.entity';
 import { Web3Service } from 'web3/web3.service';
+import { LogService } from 'log/log.service';
 
 @Controller('user')
 export class UserController {
@@ -15,7 +16,8 @@ export class UserController {
 		private readonly userService: UserService,
 		private readonly appService: AppService,
 		private readonly authService: AuthService,
-		private readonly web3Service: Web3Service
+		private readonly web3Service: Web3Service,
+		private readonly logService: LogService
 	) {}
 
 	@Post()
@@ -40,13 +42,15 @@ export class UserController {
 
 		/** 加密用户信息 */
 		const encryptedResult = this.userService.encrypt(encryptedBody, body.publicKey);
-		console.log(encryptedResult);
 
 		/** 用户信息上链 */
 		await this.web3Service.setInfo(user.username, encryptedResult);
 
 		/** 将用户公钥存储至数据库内 */
 		await this.userService.addPublicKey(user.id, body.publicKey);
+
+		/** 记入日志 */
+		this.logService.insertOneLog(user, 'AUTHENTICATION');
 
 		const _user = await this.userService.findOne(user.id);
 		delete _user.password;
@@ -56,6 +60,9 @@ export class UserController {
 	@Get('confirm')
 	@Auth()
 	async getConfirmInfo(@User() user: UserEntity) {
-		return this.appService.success(await this.web3Service.getInfo(user.username));
+		const info = await this.web3Service.getInfo(user.username);
+		/** 记入日志 */
+		this.logService.insertOneLog(user, 'GET_INFORMATION');
+		return this.appService.success(info);
 	}
 }

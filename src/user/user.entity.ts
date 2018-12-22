@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import { LogEntity } from 'log/log.entity';
 
 @Entity()
 export class UserEntity {
@@ -12,6 +13,9 @@ export class UserEntity {
 
 	@Column({ length: 5000, nullable: true })
 	publicKey: string;
+
+	@OneToMany((type) => LogEntity, (log) => log.user)
+    logs: LogEntity[];
 
 	@UpdateDateColumn() updateDate: Date;
 	@CreateDateColumn() createDate: Date;
