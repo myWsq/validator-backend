@@ -5,22 +5,28 @@ import { User } from '../user/user.decorator';
 import { UserEntity } from '../user/user.entity';
 import { Auth } from './auth.decorator';
 import { LoginDto } from './auth.dto';
+import { AppService } from 'app.service';
+import { ResponseCode } from 'app.interface';
 
 @Controller('auth')
 export class AuthController {
-	constructor(private readonly authService: AuthService, private readonly userService: UserService) {}
+	constructor(
+		private readonly authService: AuthService,
+		private readonly userService: UserService,
+		private readonly appService: AppService
+	) {}
 
 	@Post()
 	async login(@Body() loginCto: LoginDto) {
 		const user = await this.userService.findOneByUsername(loginCto.username);
 		if (!user) {
-			throw new BadRequestException('User Not Found');
+			return this.appService.error('Username Not Found', ResponseCode.USERNAME_NOT_EXIST);
 		} else if (!this.userService.validatePassword(loginCto.password, user.password)) {
-			throw new BadRequestException('Invalid Password');
+			return this.appService.error('Invaild Password', ResponseCode.INVALID_PASSWORD);
 		} else {
-			return {
+			return this.appService.success({
 				token: this.authService.generateJwtToken(user),
-			};
+			});
 		}
 	}
 
@@ -28,6 +34,6 @@ export class AuthController {
 	@Auth()
 	async me(@User() user: UserEntity) {
 		delete user.password;
-		return user;
+		return this.appService.success(user);
 	}
 }

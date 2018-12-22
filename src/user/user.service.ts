@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository, DeepPartial } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import * as NodeRSA from 'node-rsa';
+import { Web3Service } from 'web3/web3.service';
 @Injectable()
 export class UserService {
 	constructor(@InjectRepository(UserEntity) private readonly UserRepository: Repository<UserEntity>) {}
@@ -43,5 +45,19 @@ export class UserService {
 
 	validatePassword(password: string, hash: string) {
 		return bcrypt.compareSync(password, hash);
+	}
+
+	/**添加公钥 */
+	async addPublicKey(id: number, publicKey: string) {
+		return await this.UserRepository.update(id, { publicKey });
+	}
+
+	/** 使用用户公钥加密信息 */
+	encrypt(text: any, publicKey: string) {
+		const key = new NodeRSA(publicKey, 'pkcs1-public', {
+			environment: 'node',
+			encryptionScheme: 'pkcs1',
+		});
+		return key.encrypt(text, 'base64');
 	}
 }

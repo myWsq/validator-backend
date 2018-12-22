@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { CommonModule } from './common/common.module';
+import { Web3Module } from './web3/web3.module';
 
 @Module({
 	imports: [
@@ -15,6 +16,7 @@ import { CommonModule } from './common/common.module';
 		AuthModule,
 		TypeOrmModule.forRoot(),
 		CommonModule,
+		Web3Module,
 	],
 	controllers: [
 		AppController,

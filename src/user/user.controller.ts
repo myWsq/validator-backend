@@ -1,18 +1,61 @@
-import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Body, BadRequestException, Get } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './user.dto';
+import { CreateUserDto, ConfirmDto } from './user.dto';
+import { AppService } from 'app.service';
+import { ResponseCode } from 'app.interface';
+import { AuthService } from 'auth/auth.service';
+import { Auth } from 'auth/auth.decorator';
+import { User } from './user.decorator';
+import { UserEntity } from './user.entity';
+import { Web3Service } from 'web3/web3.service';
 
 @Controller('user')
 export class UserController {
-	constructor(private readonly userService: UserService) {}
+	constructor(
+		private readonly userService: UserService,
+		private readonly appService: AppService,
+		private readonly authService: AuthService,
+		private readonly web3Service: Web3Service
+	) {}
 
 	@Post()
 	async register(@Body() body: CreateUserDto) {
 		if (!await this.userService.findOneByUsername(body.username)) {
 			const user = await this.userService.createUser(body);
 			delete user.password;
-			return user;
+			return this.appService.success({ user, token: this.authService.generateJwtToken(user) });
 		}
-		throw new BadRequestException(`User [${body.username}] Already Exists`);
+		return this.appService.error('Username Already exists', ResponseCode.USERNAME_EXIST);
+	}
+
+	/** 存储用户公钥, 用户私密信息上链 */
+	@Post('confirm')
+	@Auth()
+	async confirm(@Body() body: ConfirmDto, @User() user: UserEntity) {
+		/** 要加密上链的信息 */
+		const encryptedBody = {
+			phoneNumber: body.phoneNumber,
+			idCardNumber: body.idCardNumber,
+		};
+
+		/** 加密用户信息 */
+		const encryptedResult = this.userService.encrypt(encryptedBody, body.publicKey);
+		console.log(encryptedResult);
+
+		/** 用户信息上链 */
+		await this.web3Service.setInfo(user.username, encryptedResult);
+
+		/** 将用户公钥存储至数据库内 */
+		await this.userService.addPublicKey(user.id, body.publicKey);
+
+		const _user = await this.userService.findOne(user.id);
+		delete _user.password;
+		return this.appService.success(_user);
+	}
+	/** 从链上获取用户加密的信息 */
+	@Get('confirm')
+	@Auth()
+	async getConfirmInfo(@User() user: UserEntity) {
+		return this.appService.success(await this.web3Service.getInfo(user.username));
 	}
 }
