@@ -18,6 +18,6 @@ export class Web3Service {
 	async setInfo(username: string, info: string) {
 		const instance = await InformationContract.deployed();
 		const accounts = await web3.eth.getAccounts();
-		return await instance.setInfo(username, info, { from: accounts[1] });
+		return await instance.setInfo(username, info, { from: accounts[2] });
 	}
 }
