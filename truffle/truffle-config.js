@@ -4,7 +4,7 @@ module.exports = {
   networks: {
     development: {
         host: 'sxyori.com',
-        port: 8545,
+        port: 10086,
         network_id: '*',
     },
 },
