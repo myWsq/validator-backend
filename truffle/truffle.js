@@ -3,8 +3,8 @@ module.exports = {
 	// to customize your Truffle configuration!
 	networks: {
 		development: {
-			host: 'sxyori.com',
-			port: 10086,
+			host: 'localhost',
+			port: 8545,
 			network_id: '*',
 		},
 	},

@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository, DeepPartial } from 'typeorm';
-import * as bcrypt from 'bcrypt';
-import * as NodeRSA from 'node-rsa';
+import bcrypt from 'bcrypt';
+import NodeRSA from 'node-rsa';
 import { Web3Service } from 'web3/web3.service';
 @Injectable()
 export class UserService {

@@ -13,5 +13,8 @@ export class LogService {
 			user,
 			operation,
 		});
-	}
+    }
+    async findLogs(user: UserEntity) {
+        return this.LogRepository.find();
+    }
 }

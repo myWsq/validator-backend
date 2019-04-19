@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import Web3 = require('web3');
+import Web3 from 'web3';
+
 import contract = require('truffle-contract');
 import * as contractJSON from '../../truffle/build/contracts/Information.json';
 
-const web3 = new Web3('ws://sxyori.com:10086');
+const web3 = new Web3('ws://localhost:8545');
 
 const InformationContract = contract(contractJSON);
 InformationContract.setProvider(web3.currentProvider);
